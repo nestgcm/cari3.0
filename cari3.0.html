@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Delícias da Cari | Salada no Pote</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #F59E0B; /* Laranja */
+            --primary-dark: #d97706;
+            --secondary: #65A30D; /* Verde */
+            --secondary-dark: #4d7c0f;
+            --bg-light: #FFFBEB;
+            --white: #ffffff;
+            --text-dark: #1F2937;
+            --text-gray: #6B7280;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding-bottom: 80px;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            background: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .brand h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary);
+            font-size: 2.4rem;
+            line-height: 1;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+
+        .brand span {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            display: block;
+            text-align: center;
+        }
+
+        /* --- NAV TABS --- */
+        .nav-tabs {
+            display: flex;
+            background: #f3f4f6;
+            padding: 5px;
+            border-radius: 50px;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 40px;
+            background: transparent;
+            color: var(--text-gray);
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--secondary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .main-container {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        /* --- PÁGINA SOBRE --- */
+        #homeSection { animation: fadeIn 0.5s; }
+
+        .welcome-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: -50px;
+            box-shadow: var(--shadow);
+            filter: brightness(0.95);
+        }
+
+        .profile-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 60px 25px 30px; 
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bio-title {
+            color: var(--primary);
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .classic-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 15px;
+            display: block;
+        }
+
+        .bio-text {
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .highlight-quote {
+            background-color: #ecfccb;
+            padding: 20px;
+            border-radius: 12px;
+            font-style: italic;
+            color: var(--secondary-dark);
+            margin: 20px 0;
+            font-size: 0.95rem;
+            position: relative;
+            border-left: 4px solid var(--secondary);
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(101, 163, 13, 0.1);
+        }
+        .highlight-quote::before {
+            content: '"';
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+            color: var(--secondary);
+        }
+
+        .faq-section { text-align: left; margin-top: 30px; }
+        .faq-item { margin-bottom: 15px; border-bottom: 1px solid #f3f4f6; padding-bottom: 15px; }
+        .faq-title { font-weight: 700; color: var(--secondary); margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .faq-text { font-size: 0.9rem; color: #555; }
+
+        /* --- PÁGINA PEDIDO --- */
+        #orderSection { display: none; animation: fadeIn 0.5s; }
+
+        .intro-banner {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-container { margin-bottom: 25px; }
+        .progress-bar { height: 8px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
+        .step-indicator { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; color: var(--text-gray); font-weight: 600; }
+
+        .step-content { display: none; animation: fadeIn 0.5s; }
+        .step-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-header { margin-bottom: 20px; }
+        .section-header h3 { color: var(--text-dark); font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+        .section-badge { background: var(--primary-dark); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        
+        .step-subtitle { font-size: 0.85rem; color: #666; margin-left: 38px; margin-top: -5px; margin-bottom: 15px; font-style: italic; }
+        .limit-alert { font-size: 0.8rem; color: var(--text-gray); background: #fffbeb; padding: 5px 10px; border-radius: 6px; margin-left: auto; border: 1px solid var(--primary); }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option-card { position: relative; }
+        .option-card input { position: absolute; opacity: 0; height: 0; width: 0; }
+        
+        .card-visual {
+            background: var(--white); border: 2px solid transparent; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); height: 100%; display: flex; align-items: center; justify-content: center; font-weight: 500; color: var(--text-dark); font-size: 0.9rem;
+        }
+        .option-card input:checked + .card-visual {
+            border-color: var(--secondary); background-color: #ecfccb; color: var(--secondary-dark); font-weight: 700; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(101, 163, 13, 0.2);
+        }
+        .option-card input:checked + .card-visual::after {
+            content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: 8px; right: 8px; font-size: 0.8rem; color: var(--secondary);
+        }
+
+        /* --- CARD DE RESUMO (NOVO) --- */
+        .summary-card {
+            background-color: #f9fafb;
+            border: 1px dashed #ccc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        .summary-title {
+            font-weight: 700; color: var(--text-dark); margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;
+        }
+        .summary-item {
+            display: flex; justify-content: space-between; margin-bottom: 8px;
+        }
+        .summary-label { color: var(--text-gray); font-size: 0.85rem; }
+        .summary-value { font-weight: 600; color: var(--secondary-dark); text-align: right; max-width: 60%; }
+
+        .form-control { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #e5e7eb; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 1rem; background: var(--white); }
+        
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 15px; }
+        .btn { padding: 15px 30px; border-radius: 50px; border: none; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s; flex: 1; }
+        .btn-cta { background-color: var(--primary); color: white; width: 100%; font-size: 1.1rem; margin-top: 20px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); display: inline-block; text-decoration: none; }
+        .btn-next { background-color: var(--primary); color: white; }
+        .btn-prev { background-color: #e5e7eb; color: var(--text-dark); }
+        .btn-submit { background-color: var(--secondary); color: white; width: 100%; padding: 18px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(101, 163, 13, 0.3); }
+
+        /* Social & Footer */
+        .social-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+        .social-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; text-decoration: none; transition: transform 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .social-btn:hover { transform: scale(1.1); }
+        .bg-insta { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); }
+
+        .float-whatsapp {
+            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: #FFF; border-radius: 50px;
+            text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1000; display: flex; align-items: center; justify-content: center;
+            text-decoration: none; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        .site-footer { text-align: center; margin-top: 40px; padding: 30px 20px; color: var(--text-gray); font-size: 0.85rem; }
+        
+        .philosophical-quote {
+            font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--secondary-dark); margin-bottom: 15px;
+            display: block; max-width: 500px; margin-left: auto; margin-right: auto;
+        }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1100; backdrop-filter: blur(4px); }
+        .modal-card { background: white; padding: 30px; border-radius: 20px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: popUp 0.3s; }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .success-icon { font-size: 4rem; color: var(--secondary); margin-bottom: 20px; }
+        .alert-icon { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
+
+        @media (max-width: 480px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .card-visual { justify-content: flex-start; padding-left: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/+5571999007379?text=Ol%C3%A1%2C+vim+pelo+site+e+preciso+de+ajuda." class="float-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header class="header">
+        <div class="brand">
+            <h1>Delícias da Cari</h1>
+            <span>Healthy Food</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('home')">Quem Somos</button>
+            <button class="tab-btn" onclick="switchTab('order')">Fazer Pedido</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+
+        <div id="homeSection">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="welcome-img" alt="Salada Fresca">
+            
+            <div class="profile-card">
+                <h2 class="bio-title">Olá, sou a Cari! 👩‍🍳</h2>
+                
+                <span class="classic-quote">"Que seu remédio seja seu alimento, e que seu alimento seja seu remédio." — Hipócrates</span>
+                
+                <div class="bio-text">
+                    <p>Sejam muito bem-vindos à <strong>Delícias da Cari</strong>! Meu nome é Girclecia Carine, sou graduada em enfermagem, mas minha paixão sempre foi a culinária e a alimentação saudável.</p>
+                    <p>Aqui, trago para você um pote de 300g recheado de alimentos selecionados, com muito sabor e praticidade para facilitar o seu dia a dia.</p>
+                    <p><strong>Nosso diferencial?</strong> Molhos artesanais à base de iogurte natural e especiarias que transformam qualquer salada em uma experiência incrível.</p>
+                </div>
+
+                <div class="highlight-quote">
+                    Comer com consciência é nutrir o corpo e a alma com amor. Escolher alimentos saudáveis é dizer 'eu te amo' para seu corpo.
+                </div>
+
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-title"><i class="far fa-snowflake"></i> Como conservar?</div>
+                        <div class="faq-text">Sua salada dura até 5 dias na geladeira (sem manipular).</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-title"><i class="far fa-clock"></i> Quando pedir?</div>
+                        <div class="faq-text">Pedidos de <strong>Segunda a Quinta</strong>. Entregas aos domingos.</div>
+                    </div>
+                    <div class="faq-item">
+                         <div class="faq-title"><i class="fas fa-qrcode"></i> Pagamento</div>
+                         <div class="faq-text">PIX: carinemilitao@gmail.com</div>
+                    </div>
+                </div>
+
+                <button onclick="switchTab('order')" class="btn btn-cta">
+                    MONTAR MINHA SALADA <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="social-buttons">
+                    <a href="https://www.instagram.com/deliciasda_cari" target="_blank" class="social-btn bg-insta">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="orderSection">
+            <div class="intro-banner">
+                <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Monte sua Salada</h2>
+                <p>Personalize seu pote passo a passo</p>
+            </div>
+
+            <form id="orderForm">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="step-indicator">
+                        <span id="stepCount">Passo 1 de 7</span>
+                        <span id="stepName">Molhos</span>
+                    </div>
+                </div>
+
+                <div class="step-content active" data-step="1" data-name="Molhos">
+                    <div class="section-header">
+                        <h3><span class="section-badge">1</span> Escolha o Molho</h3>
+                        <span class="limit-alert">1 opção</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="camada1" value="Mostarda e mel" required><div class="card-visual">Mostarda e mel</div></label>
+                        <label class="option-card"><input type="radio" name="camada1" value="Iogurte c/ especiarias"><div class="card-visual">Iogurte c/ especiarias</div></label>
+                        <label class="option-card"><input type="radio" name="camada1" value="Tradicional"><div class="card-visual">Tradicional</div></label>
+                        <label class="option-card"><input type="radio" name="camada1" value="Parmesão"><div class="card-visual">Parmesão</div></label>
+                        <label class="option-card"><input type="radio" name="camada1" value="Rosé"><div class="card-visual">Rosé</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Próximo <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="2" data-name="Grãos">
+                    <div class="section-header">
+                        <h3><span class="section-badge">2</span> Escolha os Grãos</h3>
+                        <span class="limit-alert">1 opção</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="camada2" value="Milho" required><div class="card-visual">Milho</div></label>
+                        <label class="option-card"><input type="radio" name="camada2" value="Ervilha"><div class="card-visual">Ervilha</div></label>
+                        <label class="option-card"><input type="radio" name="camada2" value="Grão-de-bico"><div class="card-visual">Grão-de-bico</div></label>
+                        <label class="option-card"><input type="radio" name="camada2" value="Feijão fradinho"><div class="card-visual">Feijão fradinho</div></label>
+                        <label class="option-card"><input type="radio" name="camada2" value="Feijão branco"><div class="card-visual">Feijão branco</div></label>
+                        <label class="option-card"><input type="radio" name="camada2" value="Lentilha"><div class="card-visual">Lentilha</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Próximo <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="3" data-name="Frutas e Legumes">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3><span class="section-badge">3</span> Frutas/Legumes</h3>
+                            <span class="limit-alert">Até 2 opções</span>
+                        </div>
+                        <p class="step-subtitle">Caso não queira nenhum, basta avançar.</p>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Manga"><div class="card-visual">Manga</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Abacaxi"><div class="card-visual">Abacaxi</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Pepino"><div class="card-visual">Pepino</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Cenoura ralada"><div class="card-visual">Cenoura ralada</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Beterraba ralada"><div class="card-visual">Beterraba ralada</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Tomate cereja"><div class="card-visual">Tomate cereja</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Uva passa"><div class="card-visual">Uva passa</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Brócolis"><div class="card-visual">Brócolis</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Batata doce"><div class="card-visual">Batata doce</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Cebola roxa"><div class="card-visual">Cebola roxa</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada3" value="Cebola branca"><div class="card-visual">Cebola branca</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Próximo <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="4" data-name="Proteína">
+                    <div class="section-header">
+                        <h3><span class="section-badge">4</span> Proteína</h3>
+                        <span class="limit-alert">1 opção</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="camada4" value="Carne moída" required><div class="card-visual">Carne moída</div></label>
+                        <label class="option-card"><input type="radio" name="camada4" value="Frango desfiado"><div class="card-visual">Frango desfiado</div></label>
+                        <label class="option-card"><input type="radio" name="camada4" value="Ovo codorna"><div class="card-visual">Ovo codorna (6un)</div></label>
+                        <label class="option-card"><input type="radio" name="camada4" value="Ovo galinha"><div class="card-visual">Ovo galinha (2un)</div></label>
+                        <label class="option-card"><input type="radio" name="camada4" value="Peito de peru"><div class="card-visual">Peito de peru</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Próximo <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="5" data-name="Folhas">
+                    <div class="section-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3><span class="section-badge">5</span> Folhas</h3>
+                            <span class="limit-alert">Até 2 opções</span>
+                        </div>
+                        <p class="step-subtitle">Prefere sem folhas? É só avançar.</p>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Alface crespa"><div class="card-visual">Alface crespa</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Alface americana"><div class="card-visual">Alface americana</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Alface roxa"><div class="card-visual">Alface roxa</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Rúcula"><div class="card-visual">Rúcula</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Couve em tiras"><div class="card-visual">Couve em tiras</div></label>
+                        <label class="option-card"><input type="checkbox" name="camada5" value="Acelga"><div class="card-visual">Acelga</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Próximo <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="6" data-name="Sementes">
+                    <div class="section-header">
+                        <h3><span class="section-badge">6</span> Sementes</h3>
+                        <span class="limit-alert">1 opção</span>
+                    </div>
+                    <div class="options-grid">
+                        <label class="option-card"><input type="radio" name="camada6" value="Gergelim" required><div class="card-visual">Gergelim</div></label>
+                        <label class="option-card"><input type="radio" name="camada6" value="Linhaça"><div class="card-visual">Linhaça</div></label>
+                        <label class="option-card"><input type="radio" name="camada6" value="Chia"><div class="card-visual">Chia</div></label>
+                        <label class="option-card"><input type="radio" name="camada6" value="Sem. Abóbora"><div class="card-visual">Sem. Abóbora</div></label>
+                        <label class="option-card"><input type="radio" name="camada6" value="Sem Sementes"><div class="card-visual">Sem Sementes</div></label>
+                    </div>
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep()">Finalizar <i class="fas fa-check"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-content" data-step="7" data-name="Finalizar">
+                    <div class="section-header">
+                        <h3><span class="section-badge"><i class="fas fa-check-double"></i></span> Conferir e Enviar</h3>
+                        <p style="color: #666; font-size: 0.9rem;">Confira seu pedido antes de informar o endereço.</p>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-title">Resumo da Salada</div>
+                        <div class="summary-item"><span class="summary-label">Molho:</span> <span class="summary-value" id="resumoMolho">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Grão:</span> <span class="summary-value" id="resumoGrao">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Frutas/Legumes:</span> <span class="summary-value" id="resumoLegume">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Proteína:</span> <span class="summary-value" id="resumoProteina">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Folhas:</span> <span class="summary-value" id="resumoFolhas">-</span></div>
+                        <div class="summary-item"><span class="summary-label">Sementes:</span> <span class="summary-value" id="resumoSemente">-</span></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" name="nome" class="form-control" placeholder="Ex: Maria Silva" required>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp</label>
+                        <input type="tel" name="telefone" class="form-control" placeholder="(71) 99999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço Completo</label>
+                        <textarea name="endereco" class="form-control" rows="2" placeholder="Rua, Número, Bairro, Ponto de referência" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Observações</label>
+                        <textarea name="obs" class="form-control" rows="2" placeholder="Ex: Alergia a glúten, etc."></textarea>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep()">Voltar</button>
+                        <button type="submit" class="btn btn-submit" id="submitBtn">ENVIAR PEDIDO AGORA</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <footer class="site-footer">
+            <span class="philosophical-quote">"Não se pode pensar bem, amar bem, dormir bem, se não se jantou bem." — Virginia Woolf</span>
+            <p style="margin-top: 15px; opacity: 0.7;">&copy; 2024 Delícias da Cari - Feito com 🧡</p>
+        </footer>
+
+    </div>
+
+    <div class="modal-overlay" id="alertModal">
+        <div class="modal-card">
+            <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+            <h3 style="color: var(--primary); font-size: 1.4rem; margin-bottom: 10px;">Atenção</h3>
+            <p id="alertMessage" style="color: #666; margin-bottom: 20px;">Mensagem.</p>
+            <button onclick="closeAlert()" class="btn btn-next" style="width: 100%">Entendi</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <h3 style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 10px;">Pedido Recebido!</h3>
+            <p style="color: #666; margin-bottom: 20px;">Obrigado, <span id="clientName"></span>! Recebemos seu pedido com sucesso. Em breve entraremos em contato.</p>
+            <button onclick="location.reload()" class="btn btn-next" style="width: 100%">Fazer Novo Pedido</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURAÇÃO ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4eb22NqICMaifUFq4ughcm_cvjMxkleHmBx4K994kGhWIprXiUdpuI7lCCaJ6kKIj/exec"; 
+
+        // --- CONFETES ---
+        function soltarConfetes() {
+            var end = Date.now() + (1000);
+            var colors = ['#F59E0B', '#65A30D', '#ffffff'];
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        // --- TABS ---
+        function switchTab(tabName) {
+            const homeSec = document.getElementById('homeSection');
+            const orderSec = document.getElementById('orderSection');
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(b => b.classList.remove('active'));
+
+            if(tabName === 'home') {
+                homeSec.style.display = 'block'; orderSec.style.display = 'none'; btns[0].classList.add('active');
+            } else {
+                homeSec.style.display = 'none'; orderSec.style.display = 'block'; btns[1].classList.add('active');
+            }
+            window.scrollTo(0,0);
+        }
+
+        // --- ALERTS ---
+        function showCustomAlert(msg) { document.getElementById('alertMessage').innerText = msg; document.getElementById('alertModal').style.display = 'flex'; }
+        function closeAlert() { document.getElementById('alertModal').style.display = 'none'; }
+
+        // --- FUNÇÃO DE ATUALIZAR RESUMO ---
+        function atualizarResumo() {
+            // Pega valores únicos (Radio)
+            const molho = document.querySelector('input[name="camada1"]:checked')?.value || "Pendente";
+            const grao = document.querySelector('input[name="camada2"]:checked')?.value || "Pendente";
+            const proteina = document.querySelector('input[name="camada4"]:checked')?.value || "Pendente";
+            const semente = document.querySelector('input[name="camada6"]:checked')?.value || "Pendente";
+
+            // Pega valores múltiplos (Checkbox)
+            const legumes = Array.from(document.querySelectorAll('input[name="camada3"]:checked')).map(el => el.value).join(', ') || "Nenhum";
+            const folhas = Array.from(document.querySelectorAll('input[name="camada5"]:checked')).map(el => el.value).join(', ') || "Nenhuma";
+
+            // Injeta no HTML
+            document.getElementById('resumoMolho').innerText = molho;
+            document.getElementById('resumoGrao').innerText = grao;
+            document.getElementById('resumoLegume').innerText = legumes;
+            document.getElementById('resumoProteina').innerText = proteina;
+            document.getElementById('resumoFolhas').innerText = folhas;
+            document.getElementById('resumoSemente').innerText = semente;
+        }
+
+        // --- WIZARD ---
+        let currentStep = 1; const totalSteps = 7;
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('stepCount').innerText = `Passo ${currentStep} de ${totalSteps}`;
+            document.getElementById('stepName').innerText = document.querySelector(`.step-content[data-step="${currentStep}"]`).dataset.name;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.step-content[data-step="${step}"]`).classList.add('active');
+            currentStep = step; 
+            updateProgress(); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Se for o último passo, atualiza o resumo
+            if(currentStep === 7) {
+                atualizarResumo();
+            }
+        }
+
+        function nextStep() {
+            const currentDiv = document.querySelector(`.step-content[data-step="${currentStep}"]`);
+            const requiredRadios = currentDiv.querySelectorAll('input[type="radio"][required]');
+            let canProceed = true;
+            if (requiredRadios.length > 0) {
+                const name = requiredRadios[0].name;
+                if (!currentDiv.querySelector(`input[name="${name}"]:checked`)) {
+                    showCustomAlert("Por favor, selecione uma opção para continuar."); canProceed = false;
+                }
+            }
+            if (canProceed && currentStep < totalSteps) showStep(currentStep + 1);
+        }
+        function prevStep() { if (currentStep > 1) showStep(currentStep - 1); }
+
+        // --- LIMITS ---
+        function limitChecks(groupName, max) {
+            const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', function() {
+                    if (document.querySelectorAll(`input[name="${groupName}"]:checked`).length > max) {
+                        this.checked = false; showCustomAlert(`Ops! Você só pode escolher até ${max} opções nesta etapa.`);
+                    }
+                });
+            });
+        }
+        limitChecks('camada3', 2); limitChecks('camada5', 2);
+
+        // --- SUBMIT ---
+        const form = document.getElementById('orderForm');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            if(!SCRIPT_URL.includes("script.google.com")) { showCustomAlert("Erro fatal: URL do Script não configurada."); return; }
+            
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            const formData = new FormData(form); const data = {};
+            const getMulti = (name) => { const els = document.querySelectorAll(`input[name="${name}"]:checked`); return Array.from(els).map(el => el.value).join(', '); };
+
+            data.nome = formData.get('nome'); data.telefone = formData.get('telefone'); data.endereco = formData.get('endereco');
+            data.camada1 = formData.get('camada1'); data.camada2 = formData.get('camada2'); data.camada3 = getMulti('camada3');
+            data.camada4 = formData.get('camada4'); data.camada5 = getMulti('camada5'); data.camada6 = formData.get('camada6');
+            data.obs = formData.get('obs');
+
+            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' })
+            .then(() => {
+                soltarConfetes();
+                document.getElementById('clientName').innerText = data.nome.split(' ')[0];
+                document.getElementById('successModal').style.display = 'flex';
+            })
+            .catch(error => {
+                showCustomAlert("Erro de conexão. Tente enviar pelo WhatsApp.");
+                btn.disabled = false; btn.innerText = "TENTAR NOVAMENTE";
+            });
+        });
+        updateProgress();
+    </script>
+</body>
+</html>
